@@ -97,14 +97,15 @@
       var operacaoRealizada = false // variável para verificar se uma operação acabou de ser realizada (para um valor
                                     // digitado sobrepor o resultado da operação anterior)
       var depoisDaAcao = false // variável para verificar se foi pressionado + - / ou * (para impedir duas vírgulas)
+      var permiteAcao = true // variavel para auxiliar no controle de ações
 
       function calcular(tipo, valor) {
         var resultado = document.getElementById('resultado')
 
         if(tipo === 'acao') {
 
-          if (depoisDaAcao == true && (valor === '+' || valor === '-' || valor === '/' || valor === '*')) {
-            valor = ''
+          if (permiteAcao == false && (valor === '+' || valor === '-' || valor === '/' || valor === '*')) {
+              valor = ''
           }
 
           if (valor === 'c') {
@@ -116,6 +117,7 @@
             resultado.value += valor
             operacaoRealizada = false
             depoisDaAcao = true
+            permiteAcao = false
           }
 
           if (valor === '=') {
@@ -137,8 +139,10 @@
           if (operacaoRealizada == true) {
             resultado.value = valor
             operacaoRealizada = false
+            permiteAcao = true
           } else {
             resultado.value += valor
+            permiteAcao = true
           }
         }
       }
